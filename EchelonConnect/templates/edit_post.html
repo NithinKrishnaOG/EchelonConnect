@@ -1,0 +1,34 @@
+<!-- edit_post.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Post</title>
+</head>
+<body>
+    <h1>Edit Post</h1>
+      <a href="{% url 'profile' pk=user.username %}">Back to Profile</a>
+
+    <form method="POST" action="{% url 'edit_post' post.id %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% if post.image %}
+        <!-- Display Current Image -->
+        <img src="{{ post.image.url }}" alt="Current Image">
+
+        <!-- Hidden Field for Post ID (To Keep the Same Post ID) -->
+        <input type="hidden" name="post_id" value="{{ post.id }}">
+
+        <!-- Display Caption and Tags Fields -->
+        <label for="caption">Caption:</label>
+        <input type="text" id="caption" name="caption" value="{{ post.caption }}">
+
+        <label for="tags">Tags:</label>
+        <input type="text" id="tags" name="tags" value="{% for tag in post.tags.all %}{{ tag.name }},{% endfor %}">
+        {% else %}
+        <label for="text">Text:</label>
+        <input type="text" id="text" name="text" value="{{ post.text }}">
+        {% endif %}
+        <!-- Submit Button -->
+        <button type="submit">Save Changes</button>
+    </form>
+</body>
+</html>

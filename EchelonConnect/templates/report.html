@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--    <h2>Report Form</h2>-->
+<!--    <form method="post">-->
+<!--        {% csrf_token %}-->
+<!--        <label for="reported_item_type">Reported Item Type:</label>-->
+<!--        <select name="reported_item_type" id="reported_item_type">-->
+<!--            <option value="post">Post</option>-->
+<!--            <option value="user">User</option>-->
+<!--        </select>-->
+<!--        <br>-->
+<!--        <h1>Report</h1>-->
+<!--        {% if is_report_for_post %}-->
+<!--            <p>Reported Item ID: {{ post_id }}</p>-->
+<!--        {% else %}-->
+<!--            <p>Reported Item ID: {{ user_id }}</p>-->
+<!--        {% endif %}-->
+<!--        <br>-->
+<!--        <label for="description">Description:</label>-->
+<!--        <textarea name="description" id="description" cols="30" rows="5"></textarea>-->
+<!--        <br>-->
+<!--        <button type="submit">Submit Report</button>-->
+<!--    </form>-->
+
+
+
+
+{{r_user}}
+{{r_post}}
+{{r_text}}
+
+
+
+<div id="reportModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Report Content</h2>
+    <form id="reportForm">
+      <label for="reason">Reason:</label>
+      <select id="reason" name="reason">
+        <option value="harassment">Harassment</option>
+        <option value="spam">Spam</option>
+        <option value="inappropriate">Inappropriate Content</option>
+      </select>
+      <label for="details">Details:</label>
+      <textarea id="details" name="details" rows="4"></textarea>
+      <button type="submit">Submit Report</button>
+    </form>
+  </div>
+</div>
+
+
+
+</body>
+</html>

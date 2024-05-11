@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      {% load static %}
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width= , initial-scale=1.0" />
+    <title>EchelonConnect</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css"/>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+      <script src="{% static 'js/script.js' %}"></script>
+      <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  </head>
+  <body>
+      <nav>
+            <div class="container">
+
+                <h2 class="logo">EchelonConnect</h2>
+                <a href="{% url 'admin_home' %}"><i class="uil uil-home"></i></a>
+                <div class="search-bar">
+                    <form action="{% url 'admin_search' %}" method="POST">
+                        {% csrf_token %}
+                    <input type="text" name="username" placeholder="Search for User"/>
+                    <button type="submit"><i class="uil uil-search"></i></button>
+                    </form>
+                </div>
+            </div>
+      </nav>
+
+      <main>
+          <div class="container">
+
+
+
+              <div class="middle">
+                {% for users in username_profile_list %}
+                    <div class="request" style="background-color:white;height:300px;width:500px;margin-bottom: 20px;padding:50px;border-radius: 30px;">
+                        <center>
+                        <div class="info">
+                            <div class="profile-pics">
+                                <img src="{{users.profileimg.url}}" style="height:100px;width:100px;border-radius: 30px;">
+                            </div>
+                            <div style="padding:10px;">
+                                <h5 style="font-size:26px">{{users.user}}</h5>
+                                <p>{{users.location}}</p>
+                                <p>{{users.bio}}</p>
+                            </div>
+                        </div>
+                        <div class="action">
+                            <a class="btn btn-primary" href="/admin_user_detail/{{users.user}}">View User</a>
+                        </div>
+                        </center>
+                    </div>
+                    {% endfor %}
+              </div>
+          </div>
+      </main>
+
+
+  </body>
+
+</html>

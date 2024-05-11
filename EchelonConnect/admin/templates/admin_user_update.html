@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <title>Update User</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="{% static 'script.js' %}"></script>
+
+</head>
+<body>
+    <h1>Update User</h1>
+    <form method="post" action="{% url 'admin:user_update' user.id %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update User</button>
+    </form>
+</body>
+</html>

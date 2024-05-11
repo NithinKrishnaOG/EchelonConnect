@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      {% load static %}
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Responsive Profile Page</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}" />
+  </head>
+  <body>
+    <div class="header__wrapper">
+
+      <div class="cols__container">
+        <div class="left__col">
+          <div class="img__container">
+            <img src="{{user_profile.profileimg.url}}" alt="Profile Image"/>
+          </div>
+<!--            <div class="border"></div>-->
+          <h2>@{{user_profile.user.username}}</h2>
+
+          <ul class="about">
+            <li><span>{{user_followers}}</span>Followers</li>
+            <li><span>{{user_following}}</span>Following</li>
+            <li><span>{{user_post_length}}</span>Posts</li>
+          </ul>
+
+          <div class="content">
+            <p>{{user_profile.bio}}</p>
+          </div>
+        </div>
+        <div class="right__col">
+          <nav>
+            <a href="{% url 'admin_home' %}" class="navButton"><i class="fa-solid fa-house fa-2x"></i></a>
+            <a href="{% url 'admin_user_create' username=user_profile.user %}"><button>Account Settings</button></a>
+          </nav>
+          <div class="photoContainer">
+            {% for post in user_post %}
+              <div class="photos">
+                  {% if post.image.url|slice:"-4:" == '.mp4' or post.image.url|slice:"-5:" == '.webm' %}
+
+                <video controls>
+                    <source src="{{ post.image.url }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="play-pause-icon" onclick="togglePlayPause()">
+                    <i id="playPauseBtn" class="fa-solid fa-play"></i>
+                </div>
+
+                  {% elif post.image.url|slice:"-4:" == '.jpg' or post.image.url|slice:"-5:" == '.jpeg' or post.image.url|slice:"-4:" == '.png' %}
+
+                <img src="{{ post.image.url }}">
+
+                  {% else %}
+
+                <h5>{{ post.text }}</h5>
+
+                  {% endif %}
+
+
+<!--                <div class="dropdown">-->
+<!--                  <button class="dropbtn"><i class="fa-solid fa-ellipsis-vertical"></i></button>-->
+<!--                  <div class="dropdown-content">-->
+<!--                  <a href="#"><i class="fa-regular fa-pen-to-square"></i>&nbsp;&nbsp;Edit</a>-->
+<!--                  <a href="#" style="color:red;"><i class="fa-regular fa-trash-can"></i>&nbsp;&nbsp;Delete</a>-->
+<!--                  </div>-->
+<!--                </div>-->
+
+
+              </div>
+
+            {% endfor %}
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

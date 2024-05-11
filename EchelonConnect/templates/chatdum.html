@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with {{ receiver.username }}</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        #back {
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            margin-top: 10px;
+            text-decoration: none;
+        }
+
+        #back:hover {
+            background-color: #0056b3;
+        }
+
+        h1 {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        #chat-messages {
+            max-height: 300px;
+            overflow-y: scroll;
+            padding: 10px;
+        }
+
+        form {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #fff;
+            border-top: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        form textarea {
+            width: 80%;
+            padding: 8px;
+        }
+
+        form button {
+            width: 18%;
+            padding: 8px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            <script src="https://code.jquery.com/jquery-3.6.4.min.js">
+        $(document).ready(function(){
+        // Initialize WebSocket connection
+        const socket = new WebSocket('ws://' + window.location.host + '/ws/chat/{{ receiver.username }}/');
+
+        // Handle incoming messages from WebSocket
+        socket.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+
+            // Append the new message to the chat
+            $('#chat-messages').append('<p><strong>' + data.sender + ':</strong> ' + data.content + '</p>');
+        };
+
+        // Handle form submission to send messages
+        $('form').submit(function(event) {
+            event.preventDefault();
+            const message = $('form textarea').val();
+
+            // Send the message through WebSocket
+            socket.send(JSON.stringify({
+                'content': message
+            }));
+
+            // Clear the textarea
+            $('form textarea').val('');
+        });
+<!--        // Go Back button functionality-->
+<!--            $('#back').on('click', function() {-->
+<!--                // Use JavaScript history to go back-->
+<!--                window.history.back();-->
+<!--            });-->
+    });
+</script>
+</head>
+<body>
+    <div>
+        <a href="/profile/{{receiver}}"><button  id="back">Go Back</button></a>
+        <h1>Chat with {{ receiver.username }}</h1>
+    </div>
+    <div id="chat-messages">
+        {% for message in messages %}
+            <p>
+                {% if message.sender == user %}
+                    <strong>You:</strong> {{ message.content }}
+                {% else %}
+                    <strong>{{ receiver.username }}:</strong> {{ message.content }}
+                {% endif %}
+            </p>
+        {% endfor %}
+    </div>
+
+    <form method="post" action="{% url 'chat' receiver_username=receiver.username %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Send</button>
+    </form>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+<!--Abstract-->
+
+<!--Title: EchelonConnect-->
+
+<!--EchelonConnect is a groundbreaking social media platform, redefining the way users connect, share, and engage within a digital community.-->
+<!--This dynamic online hub offers a comprehensive range of features, empowering both administrators and users with a seamless and immersive-->
+<!--social media experience. At its core, EchelonConnect fosters a vibrant ecosystem where individuals can connect, communicate, and collaborate-->
+<!--with unparalleled ease and innovation.-->
+
+<!--Module Description-->
+
+<!--User:-->
+
+<!-- - Registration: Simple and secure user onboarding, ensuring a hassle-free start.-->
+<!-- - Login: Easy access to your personalized EchelonConnect experience.-->
+<!-- - Profile Management: Customize your online presence with profiles that reflect your identity.-->
+<!-- - Content Creation: Share your thoughts, photos, videos, and more with a global audience.-->
+<!-- - Interactivity: Engage with friends and followers through likes, comments, and direct messaging.-->
+<!-- - Privacy Control: Manage your data and privacy settings to curate your digital footprint.-->
+<!-- - News Feed: Stay updated with real-time content from your network.-->
+
+<!--Administrator:-->
+
+<!-- - Dashboard: A centralized command center for monitoring and managing platform activities.-->
+<!-- - User Oversight: Efficiently manage user accounts and ensure platform integrity.-->
+<!-- - Content Moderation: Approve or reject content submissions to maintain quality and safety.-->
+<!-- - Security: Implement robust security measures to safeguard user data.-->
+<!-- - Analytics: Gain insights into user behavior and trends for strategic decision-making.-->
+<!-- - Support: Offer assistance and support to users, fostering a positive community.-->
+
+<!--Key Features:-->
+
+<!-- - Social Connectivity: EchelonConnect serves as a bridge between individuals, facilitating meaningful connections worldwide.-->
+<!-- - Media Diversity: From text and images to videos and more, it accommodates a wide array of content formats.-->
+<!-- - User-Centric: Tailored to user needs, it provides a highly customizable and intuitive interface.-->
+<!-- - Privacy and Security: Stringent measures protect user data and ensure a secure online environment.-->
+<!-- - Analytics Insights: Data-driven decision-making for optimizing the user experience.-->
+<!-- - Mobile Accessibility: A responsive design enables seamless access across devices.-->
+<!-- - Download: Download any files from it.-->
+
+
+
+
+

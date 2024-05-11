@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      {% load static %}
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width= , initial-scale=1.0" />
+    <title>EchelonConnect</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css"/>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+      <script src="{% static 'js/script.js' %}"></script>
+      <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  </head>
+  <body>
+      <nav>
+            <div class="container">
+
+                <h2 class="logo">EchelonConnect</h2>
+                <div class="search-bar">
+                    <form action="/admin_search" method="POST">
+                        {% csrf_token %}
+                    <input type="text" name="username" placeholder="Search for User"/>
+                    <button type="submit"><i class="uil uil-search"></i></button>
+                    </form>
+                </div>
+                <a href="{% url 'admin_logout' %}"><button >Logout</button></a>
+
+
+            </div>
+          <a href="#"><i class="fa-solid fa-right-from-bracket"></i></a>
+      </nav>
+
+      <main>
+          <div class="container">
+              <div class="middle">
+                  {% for users in user_profile %}
+                <div class="feeds">
+                    <div class="feed">
+                        <div class="head">
+                            
+                        </div>
+                         <div class="user">
+
+                             <div class="info">
+                                 <a href="/profile/{{post.user}}"><h3 style="color:black;">@{{users.user}}</h3></a>
+                             </div>
+                         </div>
+                        <div class="photo">
+                             <a href="/admin_user_detail/{{users.user}}">
+                                 <img src="{{users.profileimg.url}}" class="bg-gray-200 rounded-full w-10 h-10">
+                             </a>
+                         </div>
+
+                         <div class="action-button">
+                             <div class="interaction-button">
+<!--                                 <a href="/like-post?post_id={{post.id}}"><span style="color:black;"><i class="uil uil-thumbs-up"></i></span></a>-->
+                             </div>
+                             <div class="bookmark">
+<!--                                 <span><i class="uil uil-bookmark"></i></span>-->
+                             </div>
+                         </div>
+
+                         <div class="liked-by">
+                             <p><b>{{users.bio}}</b></p>
+                         </div>
+                        <br>
+
+                         <div class="caption">
+                             <a href="/admin_user_detail/{{users.user}}"> <label class="btn btn-primary">View</label></a>
+                         </div>
+
+                    </div>
+                
+
+                </div>
+                  {% endfor %}
+              </div>
+              
+          </div>
+      </main>
+
+        <script>
+
+
+
+
+
+                        //sidebar
+            const menuItems = document.querySelectorAll('.menu-item');
+            const messagesNotification = document.querySelector('#messages-notifications');
+            const messages = document.querySelector('.messages');
+            const message = messages.querySelectorAll('.message');
+            const messageSearch = document.querySelector('#message-search');
+
+            //remove active class from all menu items
+            const changeActiveItem = () => {
+                menuItems.forEach(item => {
+                    item.classList.remove('active');
+                })
+            }
+
+
+            menuItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    changeActiveItem();
+                    item.classList.add('active');
+
+                    if (item.id != 'notifications') {
+                        document.querySelector('.notifications-popup').style.display = 'none';
+                    } else {
+                        document.querySelector('.notifications-popup').style.display = 'block';
+                        document.querySelector('#notifications .notification-count').style.display='none';
+                    }
+                })
+            })
+
+
+            const searchMessage = () => {
+                const val = messageSearch.value.toLowerCase();
+                message.forEach(chat => {
+                    let name=chat.querySelector('h5').textContent.toLowerCase();
+                    if(name.indexOf(val) != -1){
+                        chat.style.display = 'flex';
+                    } else{
+                        chat.style.display = 'none';
+                    }
+                })
+            }
+
+            messageSearch.addEventListener('keyup', searchMessage);
+
+
+            messagesNotification.addEventListener('click', () => {
+                messages.style.boxShadow = '0 0 1rem var(--color-primary)';
+                messagesNotification.querySelector('.notification-count').style.display = 'none';
+                setTimeout(() => {
+                    messages.style.boxShadow = 'none';
+                }, 2000);
+            })
+
+
+        </script>
+
+  </body>
+  
+</html>
